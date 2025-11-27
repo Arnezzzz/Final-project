@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentals of Computing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #4a5568;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2d3748;
+            font-size: 1.8em;
+            margin: 25px 0 15px 0;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            color: #4a5568;
+            font-size: 1.4em;
+            margin: 20px 0 10px 0;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-menu li a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 600;
+            padding: 12px 25px;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-menu li a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .project-list li {
+            margin: 15px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+
+        .project-list li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .concept-section {
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .resume-section {
+            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .skill-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .page {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        /* Logic Gate Styles */
+        .gate-simulator, .converter-simulator {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .gate-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .input-switch {
+            background: #4a5568;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 80px;
+        }
+
+        .input-switch.on {
+            background: #48bb78;
+        }
+
+        .input-switch.off {
+            background: #f56565;
+        }
+
+        .gate-visual {
+            font-size: 3em;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .output-display {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 15px 30px;
+            background: #2d3748;
+            color: white;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .output-display.on {
+            background: #48bb78;
+        }
+
+        .output-display.off {
+            background: #f56565;
+        }
+
+        .truth-table {
+            margin: 30px auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+        }
+
+        .truth-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .truth-table th, .truth-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .truth-table th {
+            background: #4a5568;
+            color: white;
+            font-weight: 600;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px 0;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .gate-explanation {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        /* Converter Styles */
+        .converter-input {
+            padding: 15px;
+            font-size: 1.2em;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            margin: 10px;
+            width: 300px;
+            max-width: 90%;
+        }
+
+        .convert-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .convert-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .result-display {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            background: #2d3748;
+            color: white;
+            border-radius: 10px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .error-message {
+            color: #f56565;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .converter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .converter-item {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Fundamentals of Computing</h1>
+        </header>
+
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="#" onclick="showPage('course')">Course</a></li>
+                <li><a href="#" onclick="showPage('project')">Project</a></li>
+                <li><a href="#" onclick="showPage('concepts')">Concepts</a></li>
+                <li><a href="#" onclick="showPage('databases')">Databases</a></li>
+                <li><a href="#" onclick="showPage('documentation')">Documentation</a></li>
+                <li><a href="#" onclick="showPage('devteam')">Dev Team</a></li>
+            </ul>
+        </nav>
+
+               <!-- Course Page -->
+        <div id="course" class="page active content">
+            <h2>Course</h2>
+            
+            <div class="concept-section">
+                <h3>What Is This Course About?</h3>
+                <p>This course is an introduction to the fundamentals of Computer Science that will provide students with a foundation for future courses in Computer Science. The course is a broad survey of the discipline through topics that allow students to understand the capabilities of computer systems in terms of:</p>
+                <ul style="margin: 15px 0; padding-left: 30px;">
+                    <li>Computer architecture</li>
+                    <li>Operating systems and computer networks</li>
+                    <li>Software and software development</li>
+                    <li>Data organization and visualization</li>
+                    <li>The potential of computing machines</li>
+                </ul>
+            </div>
+            
+            <div class="concept-section">
+                <h3>Course Schedule & Delivery</h3>
+                <p><strong>01 Complete to include the current schedule, as well as the design and delivery of Devices</strong></p>
+                <p><strong>CORPORATE REQUISITE COMPANY</strong></p>
+            </div>
+        </div>
+
+        <!-- Project Page -->
+        <div id="project" class="page content">
+            <h2>Project</h2>
+            <p>The final project will consist of several sections. Click below to view each:</p>
+            
+            <ul class="project-list">
+                <li onclick="showProject('notgate')">Project 1: NOT Gate Simulator</li>
+                <li onclick="showProject('andgate')">Project 2: AND Gate Simulator</li>
+                <li onclick="showProject('binaryhex')">Project 3: Binary to Hexadecimal Converter</li>
+                <li onclick="showProject('ascii')">Project 4: ASCII Converter</li>
+                <li onclick="showProject('unicode')">Project 5: UNICODE Converter</li>
+                <li onclick="showProject('machine')">Project 6: Machine Language Instructions Converter</li>
+                <li onclick="showProject('bismuth')">Project 7: Bismuth Hexadecimal Converter</li>
+            </ul>
+        </div>
+
+        <!-- NOT Gate Project -->
+        <div id="notgate" class="page content">
+            <button class="back-button" onclick="showPage('project')">← Back to Projects</button>
+            <h2>NOT GATE SIMULATOR</h2>
+            
+            <div class="gate-explanation">
+                <p>The NOT gate is a single input single output gate. This gate is also known as Inverter. It performs the inversion of the applied binary signal, i.e., it converts 0 into 1 or 1 into 0.</p>
+            </div>
+
+            <div class="gate-simulator">
+                <h3>NOT Gate Simulator</h3>
+                <div class="gate-visual">NOT</div>
+                
+                <div class="gate-controls">
+                    <button class="input-switch off" onclick="toggleInput('notInput')">INPUT: 0</button>
+                </div>
+                
+                <div class="output-display off" id="notOutput">OUTPUT: 0</div>
+                
+                <div class="truth-table">
+                    <table>
+                        <tr>
+                            <th>Input</th>
+                            <th>Output</th>
+                        </tr>
+                        <tr>
+                            <td>0</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>0</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- AND Gate Project -->
+        <div id="andgate" class="page content">
+            <button class="back-button" onclick="showPage('project')">← Back to Projects</button>
+            <h2>AND GATE SIMULATOR</h2>
+            
+            <div class="gate-explanation">
+                <p>The AND gate is an electronic circuit that gives a high output (1) only if all its inputs are high (1).</p>
+            </div>
+
+            <div class="gate-simulator">
+                <h3>AND Gate Simulator</h3>
+                <div class="gate-visual">AND</div>
+                
+                <div class="gate-controls">
+                    <button class="input-switch off" onclick="toggleInput('andInput1')">INPUT A: 0</button>
+                    <button class="input-switch off" onclick="toggleInput('andInput2')">INPUT B: 0</button>
+                </div>
+                
+                <div class="output-display off" id="andOutput">OUTPUT: 0</div>
+                
+                <div class="truth-table">
+                    <table>
+                        <tr>
+                            <th>Input A</th>
+                            <th>Input B</th>
+                            <th>Output</th>
+                        </tr>
+                        <tr>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Binary to Hexadecimal Converter -->
+        <div id="binaryhex" class="page content">
+            <button class="back-button" onclick="showPage('project')">← Back to Projects</button>
+            <h2>Project 3: Binary to Hexadecimal Converter</h2>
+            
+            <div class="converter-simulator">
+                <input type="text" id="binaryInput" class="converter-input" placeholder="Enter binary number">
+                <button class="convert-button" onclick="convertBinaryToHex()">Convert</button>
+                
+                <div class="result-display" id="hexResult">
+                    Hexadecimal: -
+                </div>
+            </div>
+        </div>
+
+        <!-- ASCII Converter -->
+        <div id="ascii" class="page content">
+            <button class="back-button" onclick="showPage('project')">← Back to Projects</button>
+            <h2>Project 4: ASCII Converter</h2>
+            
+            <div class="converter-simulator">
+                <input type="text" id="asciiInput" class="converter-input" placeholder="Enter text">
+                <button class="convert-button" onclick="convertToASCII()">Convert</button>
+                
+                <div class="error-message" id="asciiError"></div>
+                
+                <div class="result-display" id="asciiResult">
+                    ASCII Codes: -
+                </div>
+                
+                <div class="converter-grid" id="asciiCodes">
+                    <!-- ASCII codes will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- UNICODE Converter -->
+        <div id="unicode" class="page content">
+            <button class="back-button" onclick="showPage('project')">← Back to Projects</button>
+            <h2>Project 5: UNICODE Converter</h2>
+            
+            <div class="converter-simulator">
+                <input type="text" id="unicodeInput" class="converter-input" placeholder="Enter text">
+                <button class="convert-button" onclick="convertToUnicode()">Convert</button>
+                
+                <div class="result-display" id="unicodeResult">
+                    Unicode Codes: -
+                </div>
+                
+                <div class="converter-grid" id="unicodeCodes">
+                    <!-- Unicode codes will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Machine Language Instructions Converter -->
+        <div id="machine" class="page content">
+            <button class="back-button" onclick="showPage('project')">← Back to Projects</button>
+            <h2>Project 6: Machine Language Instructions Converter</h2>
+            
+            <div class="converter-simulator">
+                <input type="text" id="machineInput" class="converter-input" placeholder="Enter ADD, SUB, MUL, DIV">
+                <button class="convert-button" onclick="convertMachineInstruction()">Convert</button>
+                
+                <div class="result-display" id="machineResult">
+                    Binary Code: -
+                </div>
+            </div>
+        </div>
+
+        <!-- Bismuth Hexadecimal Converter -->
+        <div id="bismuth" class="page content">
+            <button class="back-button" onclick="showPage('project')">← Back to Projects</button>
+            <h2>Project 7: Bismuth Hexadecimal Converter</h2>
+            
+            <div class="converter-simulator">
+                <input type="text" id="bismuthInput" class="converter-input" placeholder="Enter hexadecimal number">
+                <button class="convert-button" onclick="convertBismuth()">Convert</button>
+                
+                <div class="result-display" id="bismuthResult">
+                    Converted Result: -
+                </div>
+            </div>
+        </div>
+
+        <!-- Concepts Page -->
+        <div id="concepts" class="page content">
+            <h2>Fundamentals of Computing - Concepts</h2>
+            
+            <div class="concept-section">
+                <h3>Algorithms</h3>
+                <p>Step-by-step procedures for solving problems efficiently, includes sorting, searching, and optimization techniques.</p>
+            </div>
+            
+            <div class="concept-section">
+                <h3>Data Structures</h3>
+                <p>Organized ways to store and manage data. Examples include arrays, linked lists, stacks, queues, trees, and graphs.</p>
+            </div>
+            
+            <div class="concept-section">
+                <h3>Operating Systems</h3>
+                <p>Software that manages hardware, software resources, and provides common services for computer programs.</p>
+            </div>
+            
+            <div class="concept-section">
+                <h3>Networking</h3>
+                <p>Communication between computers over networks. Covers protocols like TCP/IP, routing, and the internet.</p>
+            </div>
+            
+            <div class="concept-section">
+                <h3>Cybersecurity</h3>
+                <p>Protecting systems, networks, and programs from digital attacks, ensuring confidentiality, integrity, and availability.</p>
+            </div>
+        </div>
+        <!-- Databases Page -->
+        <div id="databases" class="page content">
+            <h2>Databases</h2>
+            <p>Here we are learning about MySQL and databases.</p>
+            
+            <h3>MySQL Scenarios</h3>
+            
+            <div class="skills-grid" style="margin: 30px 0;">
+                <div class="skill-item" style="cursor: pointer; padding: 20px;">
+                    <a href="https://drive.google.com/file/d/1gL6zYcdEBFgzvh-4iPgwfkvESouDlsbX/view" target="_blank" 
+                       style="color: #2d3748; text-decoration: none; font-size: 1.2em; font-weight: bold;">
+                        📊 View MySQL Presentation
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Documentation Page -->
+        <div id="documentation" class="page content">
+            <h2>Documentation</h2>
+            <p>Here is the baseline project report documentation.</p>
+            
+            <h3>Documentation Report</h3>
+            
+            <div class="skills-grid" style="margin: 30px 0;">
+                <div class="skill-item" style="cursor: pointer; padding: 20px;">
+                    <a href="https://drive.google.com/file/d/1emYNyAIPOih0PMWEr-woOZiIIOPaUv4t/view" target="_blank" 
+                       style="color: #2d3748; text-decoration: none; font-size: 1.2em; font-weight: bold;">
+                        📄 View Full Documentation
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Dev Team Page -->
+        <div id="devteam" class="page content">
+            <h2>About Me</h2>
+            <p>My name is Arnez Gill. I study Computer Science at the University of Belize. I like learning new things about tech and improving my skills.</p>
+            
+            <h2>Resume</h2>
+            <div class="resume-section">
+                <h3>Arnez Gill</h3>
+                
+                <div class="contact-info">
+                    <p><strong>Phone:</strong> 602-6149</p>
+                    <p><strong>Email:</strong> omariarnez13@gmail.com</p>
+                </div>
+                
+                <h3>Summary</h3>
+                <p>I'm a hard-working, fast learner with good computer skills and some experience working with animals. I work well with others, follow instructions, and pick up new tasks quickly. I'm looking for a chance to learn more and be part of a dependable team.</p>
+                
+                <h3>Skills</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">Computer Skills</div>
+                    <div class="skill-item">Teamwork</div>
+                    <div class="skill-item">Communication</div>
+                    <div class="skill-item">Fast Learner</div>
+                    <div class="skill-item">Problem-Solving</div>
+                    <div class="skill-item">Basketball (team leadership and discipline)</div>
+                </div>
+                
+                <h3>Work Experience</h3>
+                <h4>Vet Assistant (Temporary)</h4>
+                <p><strong>Local Veterinary Clinic</strong></p>
+                <ul>
+                    <li>Helped with basic animal care and cleaning</li>
+                    <li>Assisted staff with simple tasks and organizing supplies</li>
+                    <li>Supported customers by guiding them to services and answering questions</li>
+                    <li>Gained experience working around pets and learning safety routines</li>
+                </ul>
+                
+                <h3>Education</h3>
+                <p><strong>Belmopan Comprehensive School (BCS)</strong></p>
+                <p>Graduated 2025</p>
+				<h3>My Projects</h3>
+<div class="skills-grid">
+    <div class="skill-item">
+        <a href="https://github.com/Arnezzzz" target="_blank" style="color: #2d3748; text-decoration: none;">
+            Repositories
+        </a>
+    </div>
+    <div class="skill-item">
+        <a href="https://arnezzzz.github.io/Belize-game/" target="_blank" style="color: #2d3748; text-decoration: none;">
+            Belize Game
+        </a>
+    </div>
+    <div class="skill-item">
+        <a href="https://arnezzzz.github.io/Bmi/" target="_blank" style="color: #2d3748; text-decoration: none;">
+            BMI
+        </a>
+    </div>
+    <div class="skill-item">
+        <a href="https://arnezzzz.github.io/5-programs/" target="_blank" style="color: #2d3748; text-decoration: none;">
+            5 Programs
+        </a>
+    </div>
+</div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© Powered by UB</p>
+        </footer>
+    </div>
+
+    <script>
+        // Page navigation
+        function showPage(pageId) {
+            const pages = document.getElementsByClassName('page');
+            for (let i = 0; i < pages.length; i++) {
+                pages[i].classList.remove('active');
+            }
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Project navigation
+        function showProject(projectId) {
+            showPage(projectId);
+        }
+
+        // Logic Gate Functions
+        function toggleInput(inputId) {
+            const button = event.target;
+            const isOn = button.classList.contains('on');
+            
+            if (isOn) {
+                button.classList.remove('on');
+                button.classList.add('off');
+                button.textContent = button.textContent.replace('1', '0');
+            } else {
+                button.classList.remove('off');
+                button.classList.add('on');
+                button.textContent = button.textContent.replace('0', '1');
+            }
+            
+            updateGateOutputs();
+        }
+
+        function updateGateOutputs() {
+            // NOT Gate
+            const notInput = document.querySelector('#notgate .input-switch');
+            const notOutput = document.getElementById('notOutput');
+            if (notInput && notOutput) {
+                const inputValue = notInput.classList.contains('on') ? 1 : 0;
+                const outputValue = inputValue === 1 ? 0 : 1;
+                notOutput.textContent = `OUTPUT: ${outputValue}`;
+                notOutput.className = `output-display ${outputValue === 1 ? 'on' : 'off'}`;
+            }
+
+            // AND Gate
+            const andInput1 = document.querySelector('#andgate .input-switch:nth-child(1)');
+            const andInput2 = document.querySelector('#andgate .input-switch:nth-child(2)');
+            const andOutput = document.getElementById('andOutput');
+            if (andInput1 && andInput2 && andOutput) {
+                const input1 = andInput1.classList.contains('on') ? 1 : 0;
+                const input2 = andInput2.classList.contains('on') ? 1 : 0;
+                const outputValue = (input1 === 1 && input2 === 1) ? 1 : 0;
+                andOutput.textContent = `OUTPUT: ${outputValue}`;
+                andOutput.className = `output-display ${outputValue === 1 ? 'on' : 'off'}`;
+            }
+        }
+
+        // Converter Functions
+        function convertBinaryToHex() {
+            const binaryInput = document.getElementById('binaryInput').value;
+            const hexResult = document.getElementById('hexResult');
+            
+            // Validate binary input
+            if (!/^[01]+$/.test(binaryInput)) {
+                hexResult.textContent = 'Error: Please enter valid binary (0s and 1s only)';
+                hexResult.style.background = '#f56565';
+                return;
+            }
+            
+            // Convert binary to hexadecimal
+            let decimal = parseInt(binaryInput, 2);
+            let hexadecimal = decimal.toString(16).toUpperCase();
+            
+            hexResult.textContent = `Hexadecimal: ${hexadecimal}`;
+            hexResult.style.background = '#48bb78';
+        }
+
+        function convertToASCII() {
+            const asciiInput = document.getElementById('asciiInput').value;
+            const asciiResult = document.getElementById('asciiResult');
+            const asciiCodes = document.getElementById('asciiCodes');
+            const asciiError = document.getElementById('asciiError');
+            
+            asciiError.textContent = '';
+            asciiCodes.innerHTML = '';
+            
+            if (!asciiInput) {
+                asciiError.textContent = 'Error: Please enter some text';
+                return;
+            }
+            
+            let asciiString = '';
+            const codesGrid = document.createElement('div');
+            codesGrid.className = 'converter-grid';
+            
+            for (let i = 0; i < asciiInput.length; i++) {
+                const char = asciiInput[i];
+                const code = char.charCodeAt(0);
+                asciiString += code + (i < asciiInput.length - 1 ? ', ' : '');
+                
+                const codeItem = document.createElement('div');
+                codeItem.className = 'converter-item';
+                codeItem.innerHTML = `<strong>'${char}'</strong><br>ASCII: ${code}`;
+                codesGrid.appendChild(codeItem);
+            }
+            
+            asciiResult.textContent = `ASCII Codes: ${asciiString}`;
+            asciiResult.style.background = '#48bb78';
+            asciiCodes.appendChild(codesGrid);
+        }
+
+        function convertToUnicode() {
+            const unicodeInput = document.getElementById('unicodeInput').value;
+            const unicodeResult = document.getElementById('unicodeResult');
+            const unicodeCodes = document.getElementById('unicodeCodes');
+            
+            unicodeCodes.innerHTML = '';
+            
+            if (!unicodeInput) {
+                unicodeResult.textContent = 'Error: Please enter some text';
+                unicodeResult.style.background = '#f56565';
+                return;
+            }
+            
+            let unicodeString = '';
+            const codesGrid = document.createElement('div');
+            codesGrid.className = 'converter-grid';
+            
+            for (let i = 0; i < unicodeInput.length; i++) {
+                const char = unicodeInput[i];
+                const code = char.charCodeAt(0);
+                unicodeString += 'U+' + code.toString(16).toUpperCase() + (i < unicodeInput.length - 1 ? ', ' : '');
+                
+                const codeItem = document.createElement('div');
+                codeItem.className = 'converter-item';
+                codeItem.innerHTML = `<strong>'${char}'</strong><br>Unicode: U+${code.toString(16).toUpperCase()}`;
+                codesGrid.appendChild(codeItem);
+            }
+            
+            unicodeResult.textContent = `Unicode Codes: ${unicodeString}`;
+            unicodeResult.style.background = '#48bb78';
+            unicodeCodes.appendChild(codesGrid);
+        }
+
+        function convertMachineInstruction() {
+            const machineInput = document.getElementById('machineInput').value.toUpperCase();
+            const machineResult = document.getElementById('machineResult');
+            
+            const instructions = {
+                'ADD': '0001',
+                'SUB': '0010', 
+                'MUL': '0011',
+                'DIV': '0100'
+            };
+            
+            if (instructions[machineInput]) {
+                machineResult.textContent = `Binary Code: ${instructions[machineInput]}`;
+                machineResult.style.background = '#48bb78';
+            } else {
+                machineResult.textContent = 'Error: Please enter ADD, SUB, MUL, or DIV';
+                machineResult.style.background = '#f56565';
+            }
+        }
+
+        function convertBismuth() {
+            const bismuthInput = document.getElementById('bismuthInput').value.toUpperCase();
+            const bismuthResult = document.getElementById('bismuthResult');
+            
+            // Validate hexadecimal input
+            if (!/^[0-9A-F]+$/.test(bismuthInput)) {
+                bismuthResult.textContent = 'Error: Please enter valid hexadecimal';
+                bismuthResult.style.background = '#f56565';
+                return;
+            }
+            
+            // Convert hex to decimal and back to show conversion
+            let decimal = parseInt(bismuthInput, 16);
+            let binary = decimal.toString(2);
+            
+            bismuthResult.innerHTML = `Decimal: ${decimal}<br>Binary: ${binary}`;
+            bismuthResult.style.background = '#48bb78';
+        }
+
+        // Initialize all gates to off state
+        window.onload = function() {
+            updateGateOutputs();
+        };
+    </script>
+</body>
+</html>
